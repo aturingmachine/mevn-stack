@@ -18,7 +18,7 @@ This project uses:
 
 To install this project simply clone or download the repo:
 
-`git clone <dir name>`
+`git clone https://github.com/aturingmachine/mevn-stack.git <dir name>`
 
 `cd <dir name>`
 
