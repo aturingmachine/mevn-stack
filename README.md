@@ -52,7 +52,7 @@ A more detailed breakdown of the scripts are as follows:
 | `dev:serve`      	| Hot reload | Static
 | `dev:client` 		| None | Hot Reload 
 | `build` | None | Bundled by Webpack
-| `static` | Hot reload | Static
+| `static` | Hot reload | Bundled by Webpack
 
 ### Project Structure
 
