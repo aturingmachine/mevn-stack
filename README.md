@@ -12,7 +12,7 @@ This project uses:
 
 [VueJS](https://vuejs.org/) For Views, with the [Vuetify](https://vuetifyjs.com/) Material Design Framework
 
-[**N**ode](https://nodejs.org/en/) For a JavaScript runtime
+[Node](https://nodejs.org/en/) For a JavaScript runtime
 
 ## Installation
 
