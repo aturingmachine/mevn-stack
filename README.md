@@ -24,7 +24,7 @@ To install this project simply clone or download the repo:
 
 `npm install`
 
-`cp .env.example .env` then add in your local Mongo URI **CHANGIN THE PORT WILL REQUIRE YOU TO CHANGE IT IN THE `views/config/http.js` file.**
+`cp .env.example .env` then add in your local Mongo URI **Changing the PORT variable in the .env will require you to change it in the `views/config/http.js` file.**
 
 ### Setup/Development
 
@@ -56,6 +56,8 @@ A more detailed breakdown of the scripts are as follows:
 
 ### Project Structure
 
+##### Backend
+
 `/src`
 
 `--/controllers/`-- Contains controllers for our API resources.
@@ -71,6 +73,8 @@ A more detailed breakdown of the scripts are as follows:
 `----/api.js`-- Routes for the API.
 
 `----/user.js`-- Routes specific to the user resource.
+
+##### Frontend
 
 `/views`
 
