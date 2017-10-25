@@ -38,7 +38,7 @@ in seperate terminal instances. This will allow hot reloading of both changes to
 
 The server will require you to be running a local instance of [MongoDB](https://www.mongodb.com/).
 
-`npm run dev` will build the client-side JavaScript and start the hot reloading of the server environment. `npm run dev:serve` can also be used to just start the API if you are working on that prior to worrying about the client.
+`npm run static` will build the client-side JavaScript and start the hot reloading of the server environment. `npm run dev:serve` can also be used to just start the API if you are working on that prior to worrying about the client.
 
 #### Scripts
 
