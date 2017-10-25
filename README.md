@@ -24,6 +24,8 @@ To install this project simply clone or download the repo:
 
 `npm install`
 
+`cp .env.example .env` then add in your local Mongo URI **CHANGIN THE PORT WILL REQUIRE YOU TO CHANGE IT IN THE `views/config/http.js` file.**
+
 ### Setup/Development
 
 To develop using this project you can run 
@@ -69,6 +71,20 @@ A more detailed breakdown of the scripts are as follows:
 `----/api.js`-- Routes for the API.
 
 `----/user.js`-- Routes specific to the user resource.
+
+`/views`
+
+`--/config/http.js`-- Axios config for local request 
+
+`--/pages/`-- Separate Component Pages go here.
+
+`--/router/index.js`-- Config for [vue-router](https://github.com/vuejs/vue-router)
+
+`--/App.vue`-- Component that has Nav-Drawer, Footer, and Toolbar wrapped around a router view of other components.
+
+`--/main.js`-- Registers the Vue components and Router
+
+`--/index.html`-- The file we return, has the Vue app in it.
 
 ### User Resource
 The example resource is as follows
