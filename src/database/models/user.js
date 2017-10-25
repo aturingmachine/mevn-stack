@@ -1,4 +1,4 @@
-//import mongoose, our ORM for mongoDB
+//import mongoose, our ODM for mongoDB
 const mongoose = require('mongoose')
 
 //Define all of its fields, like columns of a SQL table
