@@ -1,0 +1,44 @@
+{
+  "name": "mevn",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node -r dotenv/config ./bin/www",
+    "dev:serve": "nodemon -r dotenv/config ./bin/www",
+    "dev:client": "webpack-dev-server --port 3000 --open --inline --hot --content-base ./views",
+    "build": "webpack --progress --hide-modules",
+    "static": "npm run build && npm run dev:serve"
+  },
+  "dependencies": {
+    "axios": "^0.17.0",
+    "body-parser": "~1.18.2",
+    "cookie-parser": "~1.4.3",
+    "cors": "^2.8.4",
+    "debug": "~2.6.9",
+    "dotenv": "^4.0.0",
+    "express": "~4.15.5",
+    "mongoose": "^4.12.3",
+    "morgan": "~1.9.0",
+    "serve-favicon": "~2.4.5",
+    "vue": "^2.5.2",
+    "vue-router": "^3.0.1",
+    "vuetify": "^0.16.9"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-stage-2": "^6.24.1",
+    "cross-env": "^5.0.5",
+    "css-loader": "^0.28.7",
+    "file-loader": "^1.1.4",
+    "npm-run-all": "^4.1.1",
+    "style-loader": "^0.13.1",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.1",
+    "vue-loader": "^13.0.5",
+    "vue-template-compiler": "^2.4.4",
+    "webpack": "^3.6.0",
+    "webpack-dev-server": "^2.9.1"
+  }
+}
