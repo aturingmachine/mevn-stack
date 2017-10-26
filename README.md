@@ -90,6 +90,22 @@ A more detailed breakdown of the scripts are as follows:
 
 `--/index.html`-- The file we return, has the Vue app in it.
 
+### Requirements
+
+This project will require:
+
+* Node >=7.0
+
+### Dependencies 
+
+* Dependencies Via NPM
+	* [Axios](https://github.com/axios/axios) For client side HTTP requests
+	* [cors](https://github.com/expressjs/cors) For CORS during development
+	* [dotenv](https://github.com/motdotla/dotenv) Loads our .env variables
+	* [vue](https://vuejs.org/) Realtime data binding on the frontend
+	* [vuetify](https://vuetifyjs.com/vuetify/quick-start) Material design for Vue
+	* [vue-router](https://github.com/vuejs/vue-router) Router for the SPA 
+
 ### User Resource
 The example resource is as follows
 
