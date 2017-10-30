@@ -219,7 +219,6 @@ export default {
             this.deleteDialog = false
           } else {
             console.log(response)
-            this.callName = "Delete";
             this.fail = true;
             this.deleteDialog = false
           }
