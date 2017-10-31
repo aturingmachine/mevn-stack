@@ -4,95 +4,40 @@
       <template>
         <v-layout row>
           <v-flex>
-            <v-card>
-
-              <v-alert
-                color="success"
-                dismissible
-                icon="check_circle"
-                v-model="success"
-                transition="scale-transition"
-              >
-                {{ callName }} successful.
-              </v-alert>
-
-              <v-alert
-                color="error"
-                dismissible
-                icon="warning"
-                v-model="fail"
-                transition="scale-transition"
-              >
-                {{ callName }} failed.
-              </v-alert>
-            </v-card>
 
             <v-card>
+              <actionAlert v-model="alert" :alertSettings="alertSettings" />
               <!-- Begin Toolbar -->
               <v-toolbar>
-                <v-toolbar-title> Users </v-toolbar-title>
+                <v-toolbar-title> Users 
+                  
+                </v-toolbar-title>
                 <v-spacer></v-spacer>
 
-                <v-dialog v-model="addDialog" lazy absolute max-width="50%">
-                  <v-btn icon slot="activator">
-                    <v-icon> control_point </v-icon>
-                  </v-btn>
-                  <v-card>
-                    <v-toolbar>
-                      <div class="headline"> Add A User </div>
-                    </v-toolbar>
-                    <v-container fluid>
-                      <v-card-text>
+                
 
-                        <!-- Begin Input Row -->
-                        <v-form ref="form">
-                          <v-text-field label="Name" v-model="newUser.name"> </v-text-field>
-                          <v-slider label="Age" v-model="newUser.age" thumb-label step="1"></v-slider>
-                          <v-text-field label="Email" v-model="newUser.email" :rules="[rules.email]"> </v-text-field>
+                  <!-- Add Dialog Button -->
+                  <v-dialog v-model="addDialog" lazy absolute max-width="50%">
+                <v-btn icon slot="activator">
+                  <v-icon> control_point </v-icon>
+                </v-btn>
 
-
-
-                          <v-btn @click="submit()" class="green lighten-1 white--text">Submit</v-btn>
-                          <v-btn @click="addDialog = false" class="red white--text">Close</v-btn>
-                        </v-form>
-                      </v-card-text>
-                    </v-container>
-                  </v-card>
+                <!-- Add Dialog -->
+                <userAddDialog :rules="rules" 
+                @submission="prepSubmit" @closeAdd="addDialog = false">
+                </userAddDialog>
                 </v-dialog>
 
-
               </v-toolbar>
-              <v-list>
-                <v-list-group v-for="user in users" :key="user._id">
-                <v-list-tile slot="item" :id="user._id">
-                  <v-list-tile-content>
-                    {{ user.name }}
-                  </v-list-tile-content>
 
-                  <v-list-tile-action>
-                    <v-icon>keyboard_arrow_down</v-icon>
-                  </v-list-tile-action>
-                </v-list-tile>
-
-                <v-list three-line>
-                    <v-list-tile>
-                      <v-list-tile-content>
-                        <v-list-tile-title>Age: {{ user.age }}</v-list-tile-title>
-                        <v-list-tile-title>Email: {{ user.email }}</v-list-tile-title>
-                      </v-list-tile-content>
-
-                      <v-btn class="red darken-2" @click="setupDelete(user)">
-                        <v-icon dark>remove_circle_outline</v-icon>
-                      </v-btn>
-
-                      <v-btn class="blue darken-2" @click="setupEdit(user)">
-                        <v-icon dark>mode_edit</v-icon>
-                      </v-btn>
-
-                    </v-list-tile>
-                  </v-list>
-                </v-list-group>
-              </v-list>
+                <!-- List of Users -->
+                <span  v-if="users.length">
+                <userItem v-for="user in users" :key="user._id"
+                 :user="user" @setUpEdit="setupEdit(user)"
+                 @setUpDelete="setupDelete(user)">
+                 </userItem>
+                </span>
+                 <v-card v-else class="headline text-xs-center">No Users to show</v-card>
 
          <!-- Begin Delete Dialog -->
           <v-dialog v-model="deleteDialog" lazy absolute max-width="40%">
@@ -156,15 +101,18 @@
 
 <script>
 import { http } from "../config/http.js";
+import userItem from "../components/user.vue";
+import userAddDialog from "../components/userAddDialog.vue";
+import actionAlert from "../components/actionAlert.vue"
 
 export default {
+  //Variables
   data: () => ({
     errors: [],
     users: [],
     userToDelete: {},
-    success: false,
-    fail: false,
-    callName: "",
+    alertSettings: {},
+    alert: true,
     userToEdit: {},
     newUser: {},
     addDialog: false,
@@ -173,16 +121,24 @@ export default {
     editName: "",
     rules: {
       number: value => {
-        const numPattern = /^[0-9]+$/
-        numPattern.test(value) || "Numbers only"
+        const numPattern = /^[0-9]+$/;
+        numPattern.test(value) || "Numbers only";
       },
       email: value => {
         const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return pattern.test(value) || "Invalid e-mail."
+        return pattern.test(value) || "Invalid e-mail.";
       }
     }
   }),
 
+  //Components this page will need
+  components: {
+    userItem: userItem,
+    userAddDialog: userAddDialog,
+    actionAlert: actionAlert
+  },
+
+  //The methods we will need
   methods: {
     load() {
       http
@@ -202,68 +158,82 @@ export default {
 
     setupEdit(user) {
       this.userToEdit = user;
-      this.editName = user.name
-      this.editDialog = true
+      this.editName = user.name;
+      this.editDialog = true;
     },
 
     deleteUser() {
-      this.callName = "Delete";
+      this.alertSettings.callName = "Delete";
       http
         .delete("/users/" + this.userToDelete._id)
         .then(response => {
           if (response.status == 204) {
-            console.log(response)
-            this.success = true;
-            let index = this.users.indexOf(this.userToDelete)
-            this.users.splice(index, 1)
-            this.deleteDialog = false
+            this.alertSettings.color="success"
+            this.alertSettings.icon="check_circle"
+            this.alert = true
+            console.log(response);
+            let index = this.users.indexOf(this.userToDelete);
+            this.users.splice(index, 1);
+            this.deleteDialog = false;
           } else {
-            console.log(response)
-            this.fail = true;
-            this.deleteDialog = false
+            console.log(response);
+            this.alert = true
+            this.alertSettings.color = "error"
+            this.alertSettings.icon = "warning"
+            this.deleteDialog = false;
           }
         })
         .catch(e => {
-          console.log(e)
-          this.fail = true;
+          console.log(e);
+          this.alertSettings.color = "error"
+          this.alertSettings.icon = "warning"
           this.errors.push(e);
-          this.deleteDialog = false
+          this.deleteDialog = false;
+          this.alert = true
         });
     },
 
+    prepSubmit(user) {
+      this.newUser = user
+      console.log(user)
+      console.log(this.newUser)
+      this.submit()
+    },
+
     submit() {
-      this.callName = "Creation"
+      console.log(this.newUser)
+      this.callName = "Creation";
       http
         .post("/users", this.newUser)
         .then(response => {
-          this.success = true
+          this.success = true;
           console.log(response);
-          this.users.push(response.data.data)
+          this.users.push(response.data.data);
+          this.addDialog = false;
           this.newUser = {}
-          this.addDialog = false
         })
         .catch(e => {
-          this.fail = true
+          this.fail = true;
           this.errors.push(e);
-          this.addDialog = false
+          this.addDialog = false;
         });
     },
 
     edit() {
-      this.callName = "Edit"
+      this.callName = "Edit";
       http
-        .put('/users', this.userToEdit)
+        .put("/users", this.userToEdit)
         .then(response => {
-          console.log(response)
-          this.success = true
-          this.userToEdit = {}
-          this.editDialog = false
-          this.reload()
+          console.log(response);
+          this.success = true;
+          this.userToEdit = {};
+          this.editDialog = false;
+          this.load();
         })
         .catch(e => {
-          console.log(e)
-          this.errors.push(e)
-        })
+          console.log(e);
+          this.errors.push(e);
+        });
     }
   },
 
