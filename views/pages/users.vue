@@ -65,27 +65,10 @@
 
           <!-- Begin Edit Form -->
           <v-dialog v-model="editDialog" lazy absolute max-width="50%">
-                  <v-card>
-                    <v-toolbar>
-                      <div class="headline"> Edit User: {{editName}} </div>
-                    </v-toolbar>
-                    <v-container fluid>
-                      <v-card-text>
+                  <userEditDialog :rules="rules" :user="userToEdit" :editName="editName"
+                  @edited="prepEdit()" @closeEdit="editDialog = false">
 
-                        <!-- Begin Input Row -->
-                        <v-form ref="form">
-                          <v-text-field label="Name" v-model="userToEdit.name"> </v-text-field>
-                          <v-slider label="Age" v-model="userToEdit.age" thumb-label step="1"></v-slider>
-                          <v-text-field label="Email" v-model="userToEdit.email" :rules="[rules.email]"> </v-text-field>
-
-
-
-                          <v-btn @click="edit()" class="green lighten-1 white--text">Submit</v-btn>
-                          <v-btn @click="editDialog = false" class="red white--text">Close</v-btn>
-                        </v-form>
-                      </v-card-text>
-                    </v-container>
-                  </v-card>
+                  </userEditDialog>
                 </v-dialog>
                 <!-- End Edit Form -->
 
@@ -104,6 +87,7 @@ import { http } from "../config/http.js";
 import userItem from "../components/user.vue";
 import userAddDialog from "../components/userAddDialog.vue";
 import actionAlert from "../components/actionAlert.vue"
+import userEditDialog from "../components/userEditDialog.vue"
 
 export default {
   //Variables
@@ -135,7 +119,8 @@ export default {
   components: {
     userItem: userItem,
     userAddDialog: userAddDialog,
-    actionAlert: actionAlert
+    actionAlert: actionAlert,
+    userEditDialog: userEditDialog
   },
 
   //The methods we will need
@@ -200,6 +185,13 @@ export default {
       this.submit()
     },
 
+    prepEdit(user) {
+      this.userToEdit = user
+      console.log(user)
+      console.log(this.userToEdit)
+      this.edit
+    },
+
     submit() {
       console.log(this.newUser)
       this.callName = "Creation";
@@ -222,7 +214,7 @@ export default {
     edit() {
       this.callName = "Edit";
       http
-        .put("/users", this.userToEdit)
+        .put("/users", userToEdit)
         .then(response => {
           console.log(response);
           this.success = true;
