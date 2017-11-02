@@ -1,5 +1,7 @@
 <template>
+<v-card>
   <v-alert
+    v-model="alertSettings.bool"
     color=alertSettings.color
     dismissible
     icon=alertSettings.icon
@@ -9,6 +11,7 @@
       <span v-if="alertSettings.color == 'success'"> success. </span>
       <span v-else> failure. </span>
   </v-alert>
+</v-card>
 </template>
 
 <script>

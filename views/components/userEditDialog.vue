@@ -8,11 +8,11 @@
 
         <!-- Begin Input Row -->
         <v-form ref="form">
-          <v-text-field label="Name" v-model="user.name"> </v-text-field>
-          <v-slider label="Age" v-model="user.age" thumb-label step="1"></v-slider>
-          <v-text-field label="Email" v-model="user.email" :rules="[rules.email]"> </v-text-field>
+          <v-text-field label="Name" v-model="changedUser.name"> </v-text-field>
+          <v-slider label="Age" v-model="changedUser.age" thumb-label step="1"></v-slider>
+          <v-text-field label="Email" v-model="changedUser.email" :rules="[rules.email]"> </v-text-field>
 
-          <v-btn @click="$emit('edited', userToEdit)" class="green lighten-1 white--text">Submit</v-btn>
+          <v-btn @click="$emit('edited', changedUser)" class="green lighten-1 white--text">Submit</v-btn>
           <v-btn @click="$emit('closeEdit')" class="red white--text">Close</v-btn>
         </v-form>
       </v-card-text>
@@ -23,6 +23,11 @@
 <script>
 export default {
   data: () => ({
+    changedUser: {
+      name: '',
+      email: '',
+      age: 0
+    }
 
   }),
 
@@ -37,6 +42,10 @@ export default {
       type: String,
       default: ''
     }
+  },
+
+  created() {
+    this.changedUser = this.user
   }
 
 }
