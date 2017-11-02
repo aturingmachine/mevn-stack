@@ -4,59 +4,65 @@
       <template>
         <v-layout row>
           <v-flex>
-
-            <v-card>
-              
+            <v-card>              
               <!-- Begin Toolbar -->
               <v-toolbar>
                 <v-toolbar-title> Users </v-toolbar-title>
                 <v-spacer></v-spacer>
-                  <actionAlert :alertSettings="alertSettings"></actionAlert>
-                  <!-- Add Dialog Button -->
-                  <v-dialog v-model="addDialog" lazy absolute max-width="50%">
-                    <v-btn icon slot="activator">
-                      <v-icon> control_point </v-icon>
-                    </v-btn>
+                <span v-if="alertSettings.success">
+                  <v-alert v-model="alert" color="success" dismissible icon="check_circle" transition=scale-transition>
+                    {{ alertSettings.callName }} was a Success. 
+                  </v-alert>
+                </span>
+                <span v-else>
+                  <v-alert v-model="alert" color="error" dismissible icon="warning" transition=scale-transition>
+                    {{ alertSettings.callName }} Failed.
+                  </v-alert>
+                </span>
 
-                <!-- Add Dialog -->
-                <userAddDialog :rules="rules" 
-                @submission="submit" @closeAdd="addDialog = false">
-                </userAddDialog>
+                  <!-- Add Dialog Button -->
+                <v-dialog v-model="addDialog" lazy absolute max-width="50%">
+                  <v-btn icon slot="activator">
+                    <v-icon> control_point </v-icon>
+                  </v-btn>
+
+                  <!-- Add Dialog -->
+                  <userAddDialog :rules="rules" 
+                  @submission="submit" @closeAdd="addDialog = false">
+                  </userAddDialog>
                 </v-dialog>
               </v-toolbar>
 
                 <!-- List of Users -->
-                <span  v-if="users.length">
+              <span  v-if="users.length">
                 <userItem v-for="user in users" :key="user._id"
                  :user="user" @setUpEdit="setupEdit(user)"
                  @setUpDelete="setupDelete(user)">
                  </userItem>
-                </span>
-                 <v-card v-else class="headline text-xs-center">No Users to show</v-card>
+              </span>
+              <v-card v-else class="headline text-xs-center">No Users to show</v-card>
 
-         <!-- Begin Delete Dialog -->
-          <v-dialog v-model="deleteDialog" lazy absolute max-width="40%">
-            <userDeleteDialog :user="userToDelete" @closeDelete="deleteDialog = false"
-            @deleted="deleteUser">
+              <!-- Begin Delete Dialog -->
+              <v-dialog v-model="deleteDialog" lazy absolute max-width="40%">
+                <userDeleteDialog :user="userToDelete" @closeDelete="deleteDialog = false"
+                @deleted="deleteUser">
 
-            </userDeleteDialog>
-          </v-dialog>
-          <!-- End Delete Dialog -->
+                </userDeleteDialog>
+              </v-dialog>
+              <!-- End Delete Dialog -->
 
-          <!-- Begin Edit Form -->
-          <v-dialog v-model="editDialog" lazy absolute max-width="50%">
-            <userEditDialog :rules="rules" :user="userToEdit" :editName="editName"
-            @edited="edit" @closeEdit="editDialog = false; userToEdit = {}">
-            </userEditDialog>
-          </v-dialog>
-          <!-- End Edit Form -->
-
+              <!-- Begin Edit Form -->
+              <v-dialog v-model="editDialog" lazy absolute max-width="50%">
+                <userEditDialog :rules="rules" :user="userToEdit" :editName="editName"
+                @edited="edit" @closeEdit="editDialog = false; userToEdit = {}">
+                </userEditDialog>
+              </v-dialog>
+              <!-- End Edit Form -->
+              
             </v-card>
           </v-flex>
         </v-layout>
-</template>
-
-      </v-layout>
+      </template>
     </v-container>
   </v-container>
 </template>
@@ -65,9 +71,8 @@
 import { http } from "../config/http.js";
 import userItem from "../components/user.vue";
 import userAddDialog from "../components/userAddDialog.vue";
-import actionAlert from "../components/actionAlert.vue"
-import userEditDialog from "../components/userEditDialog.vue"
-import userDeleteDialog from "../components/userDeleteDialog.vue"
+import userEditDialog from "../components/userEditDialog.vue";
+import userDeleteDialog from "../components/userDeleteDialog.vue";
 
 export default {
   //Variables
@@ -81,6 +86,7 @@ export default {
     addDialog: false,
     deleteDialog: false,
     editDialog: false,
+    alert: false,
     editName: "",
     rules: {
       number: value => {
@@ -98,7 +104,6 @@ export default {
   components: {
     userItem: userItem,
     userAddDialog: userAddDialog,
-    actionAlert: actionAlert,
     userEditDialog: userEditDialog,
     userDeleteDialog: userDeleteDialog
   },
@@ -125,9 +130,9 @@ export default {
 
     //opens edit dialog
     setupEdit(user) {
-      Object.keys(user).forEach( key => {
-        this.userToEdit[key] = user[key]
-      })
+      Object.keys(user).forEach(key => {
+        this.userToEdit[key] = user[key];
+      });
       this.editName = user.name;
       this.editDialog = true;
     },
@@ -135,54 +140,50 @@ export default {
     //Delete A User
     deleteUser(tempUser) {
       this.alertSettings.callName = "Delete";
-      console.log(tempUser._id)
+      console.log(tempUser._id);
       http
         .delete("/users/" + tempUser._id)
         .then(response => {
           if (response.status == 204) {
-            this.alertSettings.color="success"
-            this.alertSettings.icon="check_circle"
-            this.alert = true
+            this.alertProc(true, "Delete");
             console.log(response);
             let index = this.users.indexOf(tempUser);
             this.users.splice(index, 1);
             this.deleteDialog = false;
           } else {
+            this.alertProc(fasle, "Delete");
             console.log(response);
-            this.alert = true
-            this.alertSettings.color = "error"
-            this.alertSettings.icon = "warning"
+            this.alert = true;
             this.deleteDialog = false;
           }
         })
         .catch(e => {
+          this.alertProc(false, "Delete");
           console.log(e);
-          this.alertSettings.color = "error"
-          this.alertSettings.icon = "warning"
           this.errors.push(e);
           this.deleteDialog = false;
-          this.alert = true
         });
     },
 
+    //adds a user
     submit(user) {
-      this.callName = "Creation";
       http
         .post("/users", user)
         .then(response => {
-          this.success = true;
           console.log(response);
-          this.users.push(response.data.data);
+          this.load()
           this.addDialog = false;
-          this.newUser = {}
+          this.newUser = {};
+          this.alertProc(true, "Submission");
         })
         .catch(e => {
-          this.fail = true;
           this.errors.push(e);
           this.addDialog = false;
+          this.alertProc(false, "Submission");
         });
     },
 
+    //edits a user
     edit(changedUser) {
       http
         .put("/users/" + changedUser._id, changedUser)
@@ -191,26 +192,22 @@ export default {
           this.userToEdit = {};
           this.editDialog = false;
           this.load();
-          this.alertProc(true, "Edit")
+          this.alertProc(true, "Edit");
         })
         .catch(e => {
           console.log(e);
           this.errors.push(e);
-          this.alertProc(false, "Edit")
+          this.editDialog = false
+          this.alertProc(false, "Edit");
         });
     },
 
+    //build the alert info for us
     alertProc(success, callName) {
-      this.alertSettings.callName = callName
-      if (success) {
-        this.alertSettings.icon = "check_circle"
-        this.alertSettings.color = "success"
-      } else {
-        this.alertSettings.icon = "warning"
-        this.alertSettings.color = "error"
-      }
-      this.alertSettings.bool = true
-      console.log(this.alert + "")
+      this.alertSettings.callName = callName;
+      this.alertSettings.success = success;
+      this.alert = true;
+      console.log(this.alert + "");
     }
   },
 
