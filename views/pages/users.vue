@@ -68,11 +68,11 @@
 </template>
 
 <script>
-import { http } from "../config/http.js";
-import userItem from "../components/user.vue";
-import userAddDialog from "../components/userAddDialog.vue";
-import userEditDialog from "../components/userEditDialog.vue";
-import userDeleteDialog from "../components/userDeleteDialog.vue";
+import { http } from "../config/http.js"
+import userItem from "../components/user.vue"
+import userAddDialog from "../components/userAddDialog.vue"
+import userEditDialog from "../components/userEditDialog.vue"
+import userDeleteDialog from "../components/userDeleteDialog.vue"
 
 export default {
   //Variables
@@ -80,7 +80,7 @@ export default {
     errors: [],
     users: [],
     userToDelete: {},
-    alertSettings: {},
+    alertSettings: {}, //this is to abstract our our alerts to make them easier and stop repeating code
     userToEdit: {},
     newUser: {},
     addDialog: false,
@@ -89,10 +89,6 @@ export default {
     alert: false,
     editName: "",
     rules: {
-      number: value => {
-        const numPattern = /^[0-9]+$/;
-        numPattern.test(value) || "Numbers only";
-      },
       email: value => {
         const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return pattern.test(value) || "Invalid e-mail.";
@@ -110,7 +106,7 @@ export default {
 
   //The methods we will need
   methods: {
-    //load all users from DB
+    //load all users from DB, we call this often to make sure the data is up to date
     load() {
       http
         .get("users")
@@ -147,6 +143,7 @@ export default {
           if (response.status == 204) {
             this.alertProc(true, "Delete");
             console.log(response);
+            //this removes the user from the list of users on the page
             let index = this.users.indexOf(tempUser);
             this.users.splice(index, 1);
             this.deleteDialog = false;
@@ -203,6 +200,7 @@ export default {
     },
 
     //build the alert info for us
+    //the first is a bool of whether or not the call was a success, the second the name of the call
     alertProc(success, callName) {
       this.alertSettings.callName = callName;
       this.alertSettings.success = success;
@@ -211,6 +209,7 @@ export default {
     }
   },
 
+  //get those users
   mounted() {
     this.load();
   }
