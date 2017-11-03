@@ -3,6 +3,8 @@
 This project is intended to be used as a quickstarter for building a
 [**M**ongo](https://www.mongodb.com/) [**E**xpress](https://expressjs.com/) [**V**ueJS](https://vuejs.org/) [**N**ode](https://nodejs.org/en/) stack. This is similar to a MEAN stack, except Angular has been swapped out for a VueJS single page application rendered on the client side.
 
+This is also the code used in the second VueJS training at the UW-Parkside App Factory.
+
 ## Technologies
 This project uses:
 
