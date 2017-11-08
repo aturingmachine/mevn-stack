@@ -148,9 +148,8 @@ export default {
             this.users.splice(index, 1);
             this.deleteDialog = false;
           } else {
-            this.alertProc(fasle, "Delete");
+            this.alertProc(false, "Delete");
             console.log(response);
-            this.alert = true;
             this.deleteDialog = false;
           }
         })
