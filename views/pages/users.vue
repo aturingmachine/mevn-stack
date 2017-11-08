@@ -144,8 +144,9 @@ export default {
             this.alertProc(true, "Delete");
             console.log(response);
             //this removes the user from the list of users on the page
-            let index = this.users.indexOf(tempUser);
-            this.users.splice(index, 1);
+            // let index = this.users.indexOf(tempUser);
+            // this.users.splice(index, 1);
+            this.load();
             this.deleteDialog = false;
           } else {
             this.alertProc(false, "Delete");
