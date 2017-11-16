@@ -111,7 +111,7 @@ This project will require:
 ### User Resource
 The example resource is as follows
 
-| Attribute     | Type          | Required|
+| Attribute     | Type         | Required|
 | :-------------: |:-------------:| :-----:  |
 | `name`      	| String 		| `true`  |
 | `age`      	| Number        | `true`  |
