@@ -9,16 +9,6 @@
               <v-toolbar>
                 <v-toolbar-title> Users </v-toolbar-title>
                 <v-spacer></v-spacer>
-                <span v-if="alertSettings.success">
-                  <v-alert v-model="alert" color="success" dismissible icon="check_circle" transition=scale-transition>
-                    {{ alertSettings.callName }} was a Success. 
-                  </v-alert>
-                </span>
-                <span v-else>
-                  <v-alert v-model="alert" color="error" dismissible icon="warning" transition=scale-transition>
-                    {{ alertSettings.callName }} Failed.
-                  </v-alert>
-                </span>
 
                   <!-- Add Dialog Button -->
                 <v-dialog v-model="addDialog" lazy absolute max-width="50%">
@@ -27,8 +17,7 @@
                   </v-btn>
 
                   <!-- Add Dialog -->
-                  <userAddDialog :rules="rules" 
-                  @submission="submit" @closeAdd="addDialog = false">
+                  <userAddDialog :rules="rules" @closeAdd="addDialog = false" @alert="alert">
                   </userAddDialog>
                 </v-dialog>
               </v-toolbar>
@@ -45,7 +34,7 @@
               <!-- Begin Delete Dialog -->
               <v-dialog v-model="deleteDialog" lazy absolute max-width="40%">
                 <userDeleteDialog :user="userToDelete" @closeDelete="deleteDialog = false"
-                @deleted="deleteUser">
+                @alert="alert">
 
                 </userDeleteDialog>
               </v-dialog>
@@ -54,7 +43,7 @@
               <!-- Begin Edit Form -->
               <v-dialog v-model="editDialog" lazy absolute max-width="50%">
                 <userEditDialog :rules="rules" :user="userToEdit" :editName="editName"
-                @edited="edit" @closeEdit="editDialog = false; userToEdit = {}">
+                @closeEdit="editDialog = false; userToEdit = {}" @alert="alert">
                 </userEditDialog>
               </v-dialog>
               <!-- End Edit Form -->
@@ -86,7 +75,6 @@ export default {
     addDialog: false,
     deleteDialog: false,
     editDialog: false,
-    alert: false,
     editName: "",
     rules: {
       email: value => {
@@ -133,35 +121,6 @@ export default {
       this.editDialog = true;
     },
 
-    //Delete A User
-    deleteUser(tempUser) {
-      this.alertSettings.callName = "Delete";
-      console.log(tempUser._id);
-      http
-        .delete("/users/" + tempUser._id)
-        .then(response => {
-          if (response.status == 204) {
-            this.alertProc(true, "Delete");
-            console.log(response);
-            //this removes the user from the list of users on the page
-            // let index = this.users.indexOf(tempUser);
-            // this.users.splice(index, 1);
-            this.load();
-            this.deleteDialog = false;
-          } else {
-            this.alertProc(false, "Delete");
-            console.log(response);
-            this.deleteDialog = false;
-          }
-        })
-        .catch(e => {
-          this.alertProc(false, "Delete");
-          console.log(e);
-          this.errors.push(e);
-          this.deleteDialog = false;
-        });
-    },
-
     //adds a user
     submit(user) {
       http
@@ -171,12 +130,12 @@ export default {
           this.load()
           this.addDialog = false;
           this.newUser = {};
-          this.alertProc(true, "Submission");
+          this.alert(true, "Submission");
         })
         .catch(e => {
           this.errors.push(e);
           this.addDialog = false;
-          this.alertProc(false, "Submission");
+          this.alert(false, "Submission");
         });
     },
 
@@ -189,23 +148,23 @@ export default {
           this.userToEdit = {};
           this.editDialog = false;
           this.load();
-          this.alertProc(true, "Edit");
+          this.alert(true, "Edit");
         })
         .catch(e => {
           console.log(e);
           this.errors.push(e);
           this.editDialog = false
-          this.alertProc(false, "Edit");
+          this.alert(false, "Edit");
         });
     },
 
     //build the alert info for us
-    //the first is a bool of whether or not the call was a success, the second the name of the call
-    alertProc(success, callName) {
-      this.alertSettings.callName = callName;
-      this.alertSettings.success = success;
-      this.alert = true;
-      console.log(this.alert + "");
+    //Will emit an alert, followed by a boolean for success, the type of call made, and the name of the 
+    //resource we are working on
+    alert(success, callName, resource) {
+      console.log('Page Alerting')
+      this.$emit('alert', success, callName, resource)
+      this.load()
     }
   },
 

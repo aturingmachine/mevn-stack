@@ -46,7 +46,7 @@
         <v-container fluid >
             <v-layout column align-center>
               <v-fade-transition mode="out-in">
-              <router-view></router-view>
+              <router-view @alert="alert" ></router-view>
             </v-fade-transition>
             </v-layout>
         </v-container>
@@ -56,6 +56,14 @@
     <v-footer :fixed="fixed" app>
       <span> Template created by <a href="http://github.com/aturingmachine">Vincent Blom</a></span>
     </v-footer>
+
+    <v-snackbar
+    bottom
+    :value="alertOpen"
+    :color="alertSuccess ? 'success' : 'error'"
+     >
+     {{ alertString }}
+    </v-snackbar>
   </v-app>
 </template>
 
@@ -83,8 +91,26 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: "MEVN Stack Client"
+      title: "MEVN Stack Client",
+      alertOpen: false,
+      alertString: '',
+      alertSuccess: false,
     };
+  },
+
+  methods: {
+    alert(success, callName, resource) {
+      this.alertOpen = false
+      this.alertString = callName + ' ' + resource
+      if (success) {
+        this.alertSuccess = true
+        this.alertString += ' was successful.'
+      } else {
+        this.alertSuccess = false
+        this.alertString += ' has failed.'
+      }
+      this.alertOpen = true
+    }
   }
 };
 </script>
