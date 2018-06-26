@@ -6,13 +6,13 @@
           <v-flex>
             <v-card>              
               <!-- Begin Toolbar -->
-              <v-toolbar>
+              <v-toolbar class="primary primaryText--text">
                 <v-toolbar-title> Users </v-toolbar-title>
                 <v-spacer></v-spacer>
 
                   <!-- Add Dialog Button -->
                 <v-dialog v-model="addDialog" lazy absolute max-width="50%">
-                  <v-btn icon slot="activator">
+                  <v-btn class="primaryText--text" icon slot="activator">
                     <v-icon> control_point </v-icon>
                   </v-btn>
 

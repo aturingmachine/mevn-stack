@@ -5,7 +5,7 @@
         <v-layout row>
           <v-flex>
             <v-card>
-              <v-toolbar>
+              <v-toolbar class="primary primaryText--text">
               <v-toolbar-title> Welcome to a Home Page component </v-toolbar-title>
               </v-toolbar>
               <v-container fluid>

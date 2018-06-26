@@ -1,15 +1,13 @@
 <template>
   <v-card>
-     <v-toolbar >
-      <div class="headline">Delete User Record {{user.name}}</div>
+     <v-toolbar class="primary primaryText--text" >
+      <v-toolbar-title> Delete User Record {{user.name}} </v-toolbar-title>
     </v-toolbar>
 
     <v-card-text>
       <p>This action will remove {{user.name}} from the application. This is
       <strong>irreversible.</strong>
       </p>
-      <br>
-      <h6> Are You Sure? </h6>
     </v-card-text>
     <v-card-actions>
       <v-btn @click="confirmDelete()" :loading="!deleteDone" class="red darken-2 white--text">Confirm</v-btn>

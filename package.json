@@ -23,7 +23,7 @@
     "serve-favicon": "~2.4.5",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
-    "vuetify": "^0.16.9"
+    "vuetify": "^1.0.19"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
