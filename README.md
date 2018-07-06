@@ -118,7 +118,7 @@ The example resource is as follows
 | `email` 		| String        | `true`  |
 
 
-### Existsing Routes
+### Existing Routes
 
 All user endpoints are behind the `/api` endpoint.
 
