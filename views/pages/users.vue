@@ -99,7 +99,7 @@ export default {
       http
         .get("users")
         .then(response => {
-          this.users = response.data.data;
+          this.users = response.data.users;
         })
         .catch(e => {
           this.errors.push(e);
@@ -119,43 +119,6 @@ export default {
       });
       this.editName = user.name;
       this.editDialog = true;
-    },
-
-    //adds a user
-    submit(user) {
-      http
-        .post("/users", user)
-        .then(response => {
-          console.log(response);
-          this.load()
-          this.addDialog = false;
-          this.newUser = {};
-          this.alert(true, "Submission");
-        })
-        .catch(e => {
-          this.errors.push(e);
-          this.addDialog = false;
-          this.alert(false, "Submission");
-        });
-    },
-
-    //edits a user
-    edit(changedUser) {
-      http
-        .put("/users/" + changedUser._id, changedUser)
-        .then(response => {
-          console.log(response.data.data);
-          this.userToEdit = {};
-          this.editDialog = false;
-          this.load();
-          this.alert(true, "Edit");
-        })
-        .catch(e => {
-          console.log(e);
-          this.errors.push(e);
-          this.editDialog = false
-          this.alert(false, "Edit");
-        });
     },
 
     //build the alert info for us

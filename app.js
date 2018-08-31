@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors')
+const { trunks } = require('trunks-log')
 
 const app = express();
 
@@ -13,7 +14,7 @@ app.use(cors())
 
 // const index = require('./src/routes/index');
 const { apiRoutes } = require('./src/routes/index')
-const { webROutes } = require('./src/routes/index')
+const { webRoutes } = require('./src/routes/index')
 
 // Use native ES6 Promises since mongoose's are deprecated.
 mongoose.Promise = global.Promise
@@ -53,4 +54,4 @@ app.use(function(err, req, res, next) {
 module.exports = app;
 
 
-console.log("App running on localhost:" + process.env.PORT)
+trunks("success", "App running on http://localhost:" + process.env.PORT)
