@@ -54,4 +54,4 @@ app.use(function(err, req, res, next) {
 module.exports = app;
 
 
-trunks("success", "App running on http://localhost:" + process.env.PORT)
+trunks.success('App running on http://localhost:{}', process.env.PORT)
