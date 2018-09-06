@@ -6,11 +6,12 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors')
-const { trunks } = require('trunks-log')
+const trunks = require('trunks-log')
 
 const app = express();
 
 app.use(cors())
+const logs = new trunks('', 'yellow', '')
 
 // const index = require('./src/routes/index');
 const { apiRoutes } = require('./src/routes/index')
@@ -28,7 +29,7 @@ mongoose.connection.on('error', error => { throw error })
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+// app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -54,4 +55,4 @@ app.use(function(err, req, res, next) {
 module.exports = app;
 
 
-trunks.success('App running on http://localhost:{}', process.env.PORT)
+logs.success('App running on http://localhost:{}', process.env.PORT)

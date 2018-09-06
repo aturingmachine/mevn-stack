@@ -21,7 +21,7 @@
     "morgan": "~1.9.0",
     "nodemon": "^1.17.5",
     "serve-favicon": "~2.4.5",
-    "trunks-log": "^1.0.0",
+    "trunks-log": "^2.0.2",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vuetify": "^1.0.19"
