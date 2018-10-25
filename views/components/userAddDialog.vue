@@ -51,12 +51,12 @@ export default {
       http
         .post("/users", this.user)
         .then(response => {
-          this.submit = true
+          this.submitDone = true
           this.alert(true, 'Create', 'User')
           this.close()
         })
         .catch(e => {
-          this.submit = true
+          this.submitDone = true
           this.alert(false, 'Create', 'User')
         });
     },
