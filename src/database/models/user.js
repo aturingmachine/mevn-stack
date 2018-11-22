@@ -11,10 +11,14 @@ const definition = {
     type: Number,
     required: true
   },
-  email: {
+ email: {
     type: String,
-    required: true
-  }
+    required: true,
+    index: {
+      unique: true,
+      sparse: true
+    }
+ }
 }
 
 //Set any options for the schema

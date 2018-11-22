@@ -1,19 +1,20 @@
 const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
-const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors')
+const trunks = require('trunks-log')
 
 const app = express();
 
 app.use(cors())
+const logs = new trunks('', 'yellow', '')
 
 // const index = require('./src/routes/index');
 const { apiRoutes } = require('./src/routes/index')
-const { webROutes } = require('./src/routes/index')
+const { webRoutes } = require('./src/routes/index')
 
 // Use native ES6 Promises since mongoose's are deprecated.
 mongoose.Promise = global.Promise
@@ -27,7 +28,6 @@ mongoose.connection.on('error', error => { throw error })
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -53,4 +53,4 @@ app.use(function(err, req, res, next) {
 module.exports = app;
 
 
-console.log("App running on localhost:" + process.env.PORT)
+logs.success('App running on http://localhost:{}', process.env.PORT)

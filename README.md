@@ -16,6 +16,8 @@ This project uses:
 
 [Node](https://nodejs.org/en/) For a JavaScript runtime
 
+This project makes use of a logging utility I created called [trunks](https://github.com/aturingmachine/trunks).
+
 ## Installation
 
 To install this project simply clone or download the repo:
