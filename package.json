@@ -5,20 +5,20 @@
   "scripts": {
     "start": "node -r dotenv/config ./bin/www",
     "dev:serve": "nodemon -r dotenv/config ./bin/www",
-    "dev:client": "webpack-dev-server --port 3000 --open --inline --hot --content-base ./views",
+    "dev:client": "npm run serve --prefix ./client",
     "build": "webpack --progress --hide-modules",
     "static": "npm run build && npm run dev:serve"
   },
   "dependencies": {
-    "axios": "^0.17.0",
+    "axios": "^0.21.1",
     "body-parser": "~1.18.2",
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.4",
     "debug": "~2.6.9",
     "dotenv": "^4.0.0",
     "express": "^4.16.3",
-    "mongoose": "^4.12.3",
-    "nodemon": "^1.17.5",
+    "mongoose": "^5.13.7",
+    "nodemon": "^2.0.12",
     "serve-favicon": "~2.4.5",
     "trunks-log": "^2.0.2",
     "vue": "^2.5.2",
@@ -39,8 +39,9 @@
     "stylus-loader": "^3.0.1",
     "vue-loader": "^13.0.5",
     "vue-template-compiler": "^2.4.4",
-    "webpack": "^3.6.0",
-    "webpack-dev-server": "^2.9.1"
+    "webpack": "^5.51.1",
+    "webpack-cli": "^4.8.0",
+    "webpack-dev-server": "^4.0.0"
   },
   "eslintConfig": {
     "root": true,
