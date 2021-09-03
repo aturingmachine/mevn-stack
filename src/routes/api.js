@@ -1,5 +1,5 @@
 /*
- * This file is used to build the API routes, we may have 
+ * This file is used to build the API routes, we may have
  * different routes for views and the like
  */
 

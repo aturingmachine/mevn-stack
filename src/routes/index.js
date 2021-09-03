@@ -3,6 +3,5 @@ const webRoutes = require('./web')
 
 module.exports = {
   apiRoutes,
-  webRoutes
+  webRoutes,
 }
-

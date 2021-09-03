@@ -5,25 +5,25 @@ const mongoose = require('mongoose')
 const definition = {
   name: {
     type: String,
-    required: true
+    required: true,
   },
   age: {
     type: Number,
-    required: true
+    required: true,
   },
- email: {
+  email: {
     type: String,
     required: true,
     index: {
       unique: true,
-      sparse: true
-    }
- }
+      sparse: true,
+    },
+  },
 }
 
 //Set any options for the schema
 const options = {
-  timestamps: true
+  timestamps: true,
 }
 
 //make the schema as a new instance of a mongoose schema, using our definition and options

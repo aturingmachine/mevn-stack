@@ -1,26 +1,42 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <v-app>
+    <v-navigation-drawer app clipped v-if="showDrawer" color="primary">
+    </v-navigation-drawer>
+    <v-app-bar app clipped-left color="primary" dark>
+      <v-btn icon @click="showDrawer = !showDrawer">
+        <v-icon> mdi-menu </v-icon>
+      </v-btn>
+      <div class="d-flex align-center">
+        <span> MEVN Stack </span>
+      </div>
+
+      <v-spacer></v-spacer>
+    </v-app-bar>
+
+    <v-main>
+      <router-view />
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  }
+
+  data: () => ({
+    showDrawer: true,
+    //
+  }),
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="scss">
+.page-content {
+  padding: 36px;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 </style>
