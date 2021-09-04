@@ -4,6 +4,7 @@ module.exports = {
   },
   env: {
     node: true,
-  },
+  }, 
+  ignorePatterns: ["dist/**"],
   extends: ['eslint:recommended', 'plugin:prettier/recommended'],
 }

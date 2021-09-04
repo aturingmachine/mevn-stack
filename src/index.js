@@ -1,4 +1,5 @@
 require('dotenv').config()
+const path = require('path')
 const express = require('express')
 const morgan = require('morgan')
 const { establishDbConnection } = require('./database/connection')
@@ -24,6 +25,9 @@ app.use(express.json())
 
 // Register our API Routes
 app.use('/api', apiRoutes)
+
+// Register web routes
+app.use('/client', express.static(path.resolve(__dirname, '../dist')))
 
 // Spin up the Application
 app.listen(port, () => {

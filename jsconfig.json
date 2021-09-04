@@ -2,5 +2,5 @@
   "include": [
     "./client/src/**/*"
   ],
-  "exclude": ["**/node_modules/**/*"]
+  "exclude": ["./client/node_modules"]
 }

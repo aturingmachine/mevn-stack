@@ -5,9 +5,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "node scripts/dev-runner.js",
-    "dev:serve": "nodemon src/index.js",
+    "dev:server": "nodemon src/index.js",
     "dev:client": "npm run serve --prefix ./client",
-    "build": "webpack --progress --hide-modules",
+    "build:client": "npm run build --prefix ./client",
     "static": "npm run build && npm run dev:serve",
     "lint": "eslint src/*",
     "lint:fix": "eslint --fix src/*"
