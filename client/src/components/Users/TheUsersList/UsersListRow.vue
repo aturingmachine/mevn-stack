@@ -44,17 +44,10 @@
 
 <script>
 import { usersLoadingState } from '../../../mixins/loading-state'
-// import Modal from '../../Modals/Modal.vue'
-// import EditUserForm from '../EditUserForm.vue'
 
 export default {
   name: 'UserListRow',
   mixins: [usersLoadingState],
-
-  components: {
-    // EditUserForm,
-    // Modal,
-  },
 
   props: {
     user: {
@@ -78,8 +71,8 @@ export default {
       this.$root.store.modal.openModal('confirm-modal', {
         loading: 'users',
         destructive: true,
-        heading: `Delete ${this.user.name}`,
-        body: `${this.user.name} will be permanentley deleted.`,
+        heading: `Delete User "${this.user.name}"?`,
+        body: `"${this.user.name}" will be permanently deleted.`,
         id: this.user._id,
       })
     },

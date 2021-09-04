@@ -55,18 +55,22 @@ exports.show = async (req, res) => {
 //ever wanted to make the users disappear 
 exports.delete = async (req, res) => {
 
+  await new Promise(resolve => setTimeout(resolve, 10000))
+
+  res.status(200).json({})
+
   //find the sneaky boye and make him go away
-  await User.findByIdAndRemove(req.params.id).exec()
-  .then(async () => {
-    log.success('Deleted User: {}', req.params.id)
-    await new Promise(resolve => setTimeout(resolve, 10000))
-    //let em know there aint no content no mo
-    res.status(204).json()
-  })
-  .catch(err => {
-    log.error(err, 'Error finding user: {}', req.params.id)
-    res.status(500).json({err: err})
-  })
+  // await User.findByIdAndRemove(req.params.id).exec()
+  // .then(async () => {
+  //   log.success('Deleted User: {}', req.params.id)
+  //   await new Promise(resolve => setTimeout(resolve, 10000))
+  //   //let em know there aint no content no mo
+  //   res.status(204).json()
+  // })
+  // .catch(err => {
+  //   log.error(err, 'Error finding user: {}', req.params.id)
+  //   res.status(500).json({err: err})
+  // })
 
 }
 

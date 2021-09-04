@@ -4,17 +4,24 @@
       {{ heading }}
     </v-card-title>
 
-    <v-card-text class="text-body-1 darkText--text">
+    <v-card-text class="text-body-1 mt-4">
       {{ body }}
     </v-card-text>
 
     <v-divider></v-divider>
 
     <v-card-actions>
-      <v-btn :loading="loading" :color="cancelColor" @click="close()">
+      <v-btn :loading="isLoading" :color="cancelColor" @click="close()">
         Cancel
       </v-btn>
-      <v-btn :loading="loading" :color="confirmColor" @click="confirmDelete()">
+
+      <v-spacer />
+
+      <v-btn
+        :loading="isLoading"
+        :color="confirmColor"
+        @click="confirmDelete()"
+      >
         Confirm
       </v-btn>
     </v-card-actions>
@@ -29,6 +36,10 @@ export default {
 
   props: {
     id: {
+      type: String,
+      required: true,
+    },
+    loading: {
       type: String,
       required: true,
     },
@@ -55,8 +66,8 @@ export default {
       return this.destructive ? 'error' : 'success'
     },
 
-    loading() {
-      return this.$root.store[this.modalProps?.loading]?.state.loading || false
+    isLoading() {
+      return this.$root.store[this.loading]?.state.loading || false
     },
   },
 
