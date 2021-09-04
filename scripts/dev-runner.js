@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+require('dotenv').config()
 const { spawn } = require('child_process')
 const boxen = require('boxen')
 const chalk = require('chalk')
@@ -9,8 +10,14 @@ const chalk = require('chalk')
  * in one process.
  */
 
+const envSettings = `Mongo URI: ${
+  process.env.MONGO_URI || chalk.red('NOT PROVIDED')
+}\nServer Port: ${process.env.SERVER_PORT || 3000}\nLog Format: ${
+  process.env.MOGAN_LOG_TEMPLATE || 'tiny'
+}`
+
 console.log(
-  boxen('MEVN Stack Dev Runner', {
+  boxen(chalk.cyanBright('MEVN Stack Dev Runner\n\n') + envSettings, {
     padding: 1,
     borderColor: 'green',
   })

@@ -16,7 +16,7 @@ function establishDbConnection() {
   log.info('Mongo Connected')
 
   mongoose.connection.on('error', (err) => {
-    logger.error('MongoDB Error', err)
+    log.error('MongoDB Error', err)
   })
 }
 

@@ -1,5 +1,6 @@
 {
   "include": [
     "./client/src/**/*"
-  ]
+  ],
+  "exclude": ["**/node_modules/**/*"]
 }
