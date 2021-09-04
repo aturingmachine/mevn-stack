@@ -1,6 +1,6 @@
-{
-  "include": [
-    "./client/src/**/*"
-  ],
-  "exclude": ["./client/node_modules"]
-}
+// {
+//   "include": [
+//     "./client/src/**/*"
+//   ],
+//   "exclude": ["./client/node_modules"]
+// }
