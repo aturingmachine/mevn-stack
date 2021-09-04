@@ -57,8 +57,9 @@ exports.delete = async (req, res) => {
 
   //find the sneaky boye and make him go away
   await User.findByIdAndRemove(req.params.id).exec()
-  .then(() => {
+  .then(async () => {
     log.success('Deleted User: {}', req.params.id)
+    await new Promise(resolve => setTimeout(resolve, 10000))
     //let em know there aint no content no mo
     res.status(204).json()
   })

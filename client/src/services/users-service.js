@@ -10,4 +10,10 @@ export const UsersService = {
   post(userData) {
     return this.http.post('', userData)
   },
+  put(id, userData) {
+    return this.http.put(`/${id}`, userData)
+  },
+  delete(id) {
+    return this.http.delete(`/${id}`)
+  },
 }

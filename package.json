@@ -1,7 +1,8 @@
 {
   "name": "mevn",
   "version": "0.0.1",
-  "private": true,
+  "private": false,
+  "license": "MIT",
   "scripts": {
     "dev": "node scripts/dev-runner.js",
     "dev:serve": "nodemon src/index.js",
@@ -10,43 +11,22 @@
     "static": "npm run build && npm run dev:serve"
   },
   "dependencies": {
-    "axios": "^0.21.1",
-    "body-parser": "~1.18.2",
-    "cookie-parser": "~1.4.3",
-    "cors": "^2.8.4",
-    "debug": "~2.6.9",
-    "dotenv": "^4.0.0",
-    "express": "^4.16.3",
-    "mongoose": "^5.13.7",
-    "nodemon": "^2.0.12",
-    "serve-favicon": "~2.4.5",
-    "trunks-log": "^2.0.2",
-    "vue": "^2.5.2",
-    "vue-router": "^3.0.1",
-    "vuetify": "^1.0.19"
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.4",
+    "trunks-log": "^2.0.3"
   },
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.2",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-stage-2": "^6.24.1",
-    "cross-env": "^5.0.5",
-    "css-loader": "^0.28.7",
+    "boxen": "^5.0.1",
+    "chalk": "^4.1.2",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "file-loader": "^1.1.4",
-    "npm-run-all": "^4.1.1",
-    "style-loader": "^0.13.1",
-    "stylus": "^0.54.5",
-    "stylus-loader": "^3.0.1",
-    "vue-loader": "^13.0.5",
-    "vue-template-compiler": "^2.4.4",
-    "webpack": "^5.51.1",
-    "webpack-cli": "^4.8.0",
-    "webpack-dev-server": "^4.0.0"
+    "nodemon": "^2.0.12"
   },
-  "eslintConfig": {
-    "root": true,
-    "extends": "standard"
+  "nodemonConfig": {
+    "ignore": [
+      "client/*"
+    ],
+    "delay": 1500
   }
 }
