@@ -10,18 +10,18 @@
       <div class="d-flex align-center">
         <v-btn
           @click="openDeleteModal()"
-          class="error lightText--text align-self-center mr-2"
+          class="error bright--text align-self-center mr-2"
           icon
-          :loading="userStateLoading"
+          :loading="usersLoading"
         >
           <v-icon>mdi-delete</v-icon>
         </v-btn>
 
         <v-btn
-          @click="toggleAddModal(true)"
-          class="accent lightText--text align-self-center"
+          @click="openEditModal()"
+          class="accent bright--text align-self-center"
           icon
-          :loading="userStateLoading"
+          :loading="usersLoading"
         >
           <v-icon>mdi-pencil</v-icon>
         </v-btn>
@@ -43,11 +43,13 @@
 </template>
 
 <script>
-import { usersLoadingState } from '../../../mixins/loading-state'
+import { loadingStates } from '../../../mixins/loading-state'
+import { ModalService } from '../../../services/modal-service'
+import EditUserForm from '../EditUserForm.vue'
 
 export default {
   name: 'UserListRow',
-  mixins: [usersLoadingState],
+  mixins: [loadingStates],
 
   props: {
     user: {
@@ -66,10 +68,14 @@ export default {
       this.showAddModal = !!show
     },
 
+    openEditModal() {
+      ModalService.openGenericModal(EditUserForm, { user: this.user })
+    },
+
     openDeleteModal() {
       console.log(this.user)
-      this.$root.store.modal.openModal('confirm-modal', {
-        loading: 'users',
+      ModalService.openConfirmModal({
+        loading: () => this.$store.getters['users/Loading'],
         destructive: true,
         heading: `Delete User "${this.user.name}"?`,
         body: `"${this.user.name}" will be permanently deleted.`,

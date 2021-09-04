@@ -1,31 +1,41 @@
 <template>
-  <v-form>
-    <v-text-field v-model="name" label="Name" />
-    <v-text-field v-model="email" label="Email" />
-    <v-slider
-      v-model="age"
-      min="18"
-      max="99"
-      :label="`Age: ${age}`"
-      thumb-label
-    />
-    <v-layout flex justify-space-between>
-      <v-btn color="error" @click="$emit('close')" :loading="userStateLoading">
+  <v-card>
+    <v-card-title class="primary bright--text">Add New User</v-card-title>
+
+    <v-card-text>
+      <v-form>
+        <v-text-field v-model="name" label="Name" />
+        <v-text-field v-model="email" label="Email" />
+        <v-slider
+          v-model="age"
+          min="18"
+          max="99"
+          :label="`Age: ${age}`"
+          thumb-label
+        />
+      </v-form>
+    </v-card-text>
+
+    <v-card-actions>
+      <v-btn color="error" @click="$emit('close')" :loading="usersLoading">
         Cancel
       </v-btn>
-      <v-btn color="success" @click="submit()" :loading="userStateLoading">
+
+      <v-spacer />
+
+      <v-btn color="success" @click="submit()" :loading="usersLoading">
         Submit
       </v-btn>
-    </v-layout>
-  </v-form>
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script>
-import { usersLoadingState } from '../../mixins/loading-state'
+import { loadingStates } from '../../mixins/loading-state'
 
 export default {
   name: 'NewUserForm',
-  mixins: [usersLoadingState],
+  mixins: [loadingStates],
 
   data: () => ({
     name: '',
@@ -38,12 +48,12 @@ export default {
       try {
         const newUser = { name: this.name, age: this.age, email: this.email }
 
-        this.$root.store.users.add(newUser)
+        await this.$store.dispatch('users/Add', newUser)
 
-        this.$emit('add-user-success', newUser)
+        this.$emit('success', newUser)
       } catch (error) {
         console.error(error)
-        this.$emit('add-user-error', { error })
+        this.$emit('error', { error })
       }
     },
   },

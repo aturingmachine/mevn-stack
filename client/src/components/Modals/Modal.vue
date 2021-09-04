@@ -1,76 +1,51 @@
 <template>
   <v-dialog @input="closeModal()" :value="showModal" :width="width">
-    <component :is="modalType" v-bind="modalProps"></component>
+    <component
+      :is="modalType"
+      :loading="loading"
+      v-bind="modalProps"
+    ></component>
   </v-dialog>
 </template>
 
 <script>
+import { ModalService } from '../../services/modal-service'
 import ConfirmModal from './ConfirmModal.vue'
+import GenericModal from './GenericModal.vue'
 
 export default {
   name: 'Modal',
 
   components: {
     ConfirmModal,
+    GenericModal,
   },
-
-  props: {
-    // show: {
-    //   type: Boolean,
-    //   required: true,
-    // },
-    // loading: {
-    //   type: Boolean,
-    //   required: false,
-    // },
-    // width: {
-    //   type: Number,
-    //   default: 450,
-    // },
-  },
-
-  data: () => ({
-    // isShowing: false,
-  }),
 
   computed: {
-    // isLoading() {
-    //   return this.loading === undefined ? false : this.loading
-    // },
-
-    // isShowingModal: {
-    //   get() {
-    //     return this.show
-    //   },
-
-    //   set(val) {
-    //     this.isShowing = val
-    //     if (!val) {
-    //       this.$emit('close', this.isShowing)
-    //     }
-    //   },
-    // },
+    loading() {
+      return this.modalProps?.loading ? this.modalProps.loading() : false
+    },
 
     width() {
       return this.modalProps?.width || 450
     },
 
     showModal() {
-      return this.$root.store.modal.state.show
+      return this.$store.state.modal.show
     },
 
     modalType() {
-      return this.$root.store.modal.state.type
+      return this.$store.state.modal.type
     },
 
     modalProps() {
-      return this.$root.store.modal.state.props
+      return this.$store.state.modal.props
     },
   },
 
   methods: {
     closeModal() {
-      this.$root.store.modal.closeModal()
+      ModalService.close()
     },
   },
 }

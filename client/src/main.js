@@ -2,15 +2,13 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import vuetify from './plugins/vuetify'
-import { simpleStore } from './state'
+import { store } from './store'
 
 Vue.config.productionTip = false
 
 new Vue({
-  data: {
-    store: simpleStore,
-  },
   router,
   vuetify,
+  store,
   render: (h) => h(App),
 }).$mount('#app')

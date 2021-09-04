@@ -1,6 +1,6 @@
 <template>
   <v-card :loading="loading">
-    <v-card-title class="secondary lightText--text">
+    <v-card-title class="primary bright--text">
       {{ heading }}
     </v-card-title>
 
@@ -11,17 +11,13 @@
     <v-divider></v-divider>
 
     <v-card-actions>
-      <v-btn :loading="isLoading" :color="cancelColor" @click="close()">
+      <v-btn :loading="loading" :color="cancelColor" @click="close()">
         Cancel
       </v-btn>
 
       <v-spacer />
 
-      <v-btn
-        :loading="isLoading"
-        :color="confirmColor"
-        @click="confirmDelete()"
-      >
+      <v-btn :loading="loading" :color="confirmColor" @click="confirmDelete()">
         Confirm
       </v-btn>
     </v-card-actions>
@@ -29,6 +25,7 @@
 </template>
 
 <script>
+import { ModalService } from '../../services/modal-service'
 export default {
   name: 'ConfirmModal',
 
@@ -40,8 +37,8 @@ export default {
       required: true,
     },
     loading: {
-      type: String,
-      required: true,
+      type: Boolean,
+      required: false,
     },
     destructive: {
       type: Boolean,
@@ -59,33 +56,23 @@ export default {
 
   computed: {
     cancelColor() {
-      return this.destructive ? 'accent' : 'error'
+      return this.destructive ? 'info' : 'error'
     },
 
     confirmColor() {
       return this.destructive ? 'error' : 'success'
     },
-
-    isLoading() {
-      return this.$root.store[this.loading]?.state.loading || false
-    },
-  },
-
-  watch: {
-    loading(newVal) {
-      if (newVal) {
-        console.log('loading came in new', newVal)
-      }
-    },
   },
 
   methods: {
     close() {
-      this.$root.store.modal.closeModal()
+      ModalService.close()
     },
 
-    confirmDelete() {
-      this.$root.store.users.delete(this.id, this.close)
+    async confirmDelete() {
+      await this.$store.dispatch('users/Delete')
+      console.log('Confirm Modal Post Delete')
+      this.close()
     },
   },
 }

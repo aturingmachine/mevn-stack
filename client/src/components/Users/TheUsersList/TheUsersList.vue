@@ -22,14 +22,13 @@ export default {
 
   computed: {
     users() {
-      console.log(this.$root.store.users.state.records)
-      return this.$root.store.users.state.records || []
+      return this.$store.getters['users/Users'] || []
     },
   },
 
   methods: {
     fetchUsers() {
-      this.$root.store.users.fetch()
+      this.$store.dispatch('users/GetAll')
     },
   },
 

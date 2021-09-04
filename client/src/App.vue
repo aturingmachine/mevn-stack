@@ -1,8 +1,17 @@
 <template>
   <v-app>
-    <v-app-bar app clipped-left color="primary" class="lightText--text">
+    <v-progress-linear
+      fixed
+      v-if="loading"
+      color="white"
+      indeterminate
+      class="elevation-25"
+      style="z-index: 6"
+    />
+
+    <v-app-bar app clipped-left color="primary" class="bright--text">
       <v-btn icon @click="showDrawer = !showDrawer">
-        <v-icon class="lightText--text">mdi-menu</v-icon>
+        <v-icon class="bright--text">mdi-menu</v-icon>
       </v-btn>
       <div class="d-flex align-center">
         <h1>MEVN Stack</h1>
@@ -11,11 +20,10 @@
       <v-spacer></v-spacer>
 
       <v-btn
-        class="lightText--text"
-        elevation="5"
+        class="bright--text mr-3"
         @click="$vuetify.theme.dark = !$vuetify.theme.dark"
         icon
-        floating
+        depressed
       >
         <v-icon>
           {{
@@ -25,17 +33,30 @@
           }}
         </v-icon>
       </v-btn>
+      <v-btn
+        icon
+        depressed
+        tag="a"
+        class="bright--text"
+        href="https://github.com/aturingmachine/mevn-stack"
+        target="blank"
+      >
+        <v-icon>mdi-github</v-icon>
+      </v-btn>
     </v-app-bar>
 
-    <v-navigation-drawer app clipped absolute color="primary" v-if="showDrawer">
+    <v-navigation-drawer app clipped color="primary" v-model="showDrawer">
       <v-list nav>
         <v-list-item
-          class="lightText--text"
+          class="bright--text"
           v-for="navLink in navLinks"
           :key="navLink.route"
           :to="navLink.route"
           link
         >
+          <v-list-item-icon>
+            <v-icon color="bright">{{ navLink.icon }}</v-icon>
+          </v-list-item-icon>
           <v-list-item-content>
             {{ navLink.text }}
           </v-list-item-content>
@@ -66,34 +87,25 @@ export default {
       {
         text: 'Home',
         route: '/',
-        icon: '',
-      },
-      {
-        text: 'About',
-        route: '/about',
-        icon: '',
+        icon: 'mdi-home',
       },
       {
         text: 'Users',
         route: '/users',
-        icon: '',
+        icon: 'mdi-account-group',
+      },
+      {
+        text: 'About',
+        route: '/about',
+        icon: 'mdi-information-variant',
       },
     ],
   }),
 
   computed: {
-    darkMode() {
-      return this.$vuetify.theme.isDark
+    loading() {
+      return this.$store.getters.loading
     },
   },
-
-  methods: {
-    toggleDarkMode() {
-      this.$vuetify.theme.isDark = !this.darkMode
-      console.log(this.$vuetify.theme)
-    },
-  },
-
-  mounted() {},
 }
 </script>

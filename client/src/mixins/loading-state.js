@@ -1,11 +1,7 @@
-export const usersLoadingState = {
+export const loadingStates = {
   computed: {
-    userStateLoading() {
-      return this.$root.store.users.state.loading
-    },
-
-    isLoading() {
-      return this.userStateLoading
+    usersLoading() {
+      return this.$store.getters['users/Loading']
     },
   },
 }
