@@ -4,7 +4,7 @@ const trunks = require('trunks-log')
 const log = new trunks('USERS')
 
 //show all users
-exports.index = async (req, res) => {
+const index = async (req, res) => {
   
   //query the DB of all users
   await User.find().exec()
@@ -19,7 +19,7 @@ exports.index = async (req, res) => {
 }
 
 //Store a new user
-exports.store = async (req, res) => {
+const store = async (req, res) => {
   console.log(req.body) 
   let user = new User(req.body)
 
@@ -38,7 +38,7 @@ exports.store = async (req, res) => {
 }
 
 //this function is for looking at one user by their mongo id
-exports.show = async (req, res) => {
+const show = async (req, res) => {
 
   //find this sneaky boye
   await User.findById(req.params.id).exec()
@@ -53,29 +53,18 @@ exports.show = async (req, res) => {
 }
 
 //ever wanted to make the users disappear 
-exports.delete = async (req, res) => {
+const destroy = async (req, res) => {
+  try {
+    await User.findByIdAndRemove(req.params.id)
 
-  await new Promise(resolve => setTimeout(resolve, 10000))
-
-  res.status(200).json({})
-
-  //find the sneaky boye and make him go away
-  // await User.findByIdAndRemove(req.params.id).exec()
-  // .then(async () => {
-  //   log.success('Deleted User: {}', req.params.id)
-  //   await new Promise(resolve => setTimeout(resolve, 10000))
-  //   //let em know there aint no content no mo
-  //   res.status(204).json()
-  // })
-  // .catch(err => {
-  //   log.error(err, 'Error finding user: {}', req.params.id)
-  //   res.status(500).json({err: err})
-  // })
-
+    res.status(204).send()
+  } catch (error) {
+    log.error(err, 'Error finding user: {}', req.params.id)
+  }
 }
 
 //edit a user based on ID
-exports.update = async (req, res) => {
+const update = async (req, res) => {
   await User
   .findByIdAndUpdate(req.params.id, req.body, { new: true })
   .exec()
@@ -88,3 +77,5 @@ exports.update = async (req, res) => {
       res.status(500).json({err: err})
     })
 }
+
+export { index, store, show, destroy, update }
