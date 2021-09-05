@@ -1,15 +1,15 @@
 <template>
-  <hello-world />
+  <article>
+    <!-- 
+      - Explain Project
+      - Link to Docs
+      - Link to GitHub Issues
+     -->
+  </article>
 </template>
 
 <script>
-import HelloWorld from '../components/HelloWorld'
-
 export default {
   name: 'Home',
-
-  components: {
-    HelloWorld,
-  },
 }
 </script>

@@ -61,7 +61,7 @@ const runner = {
 const server = {
   process: undefined,
   command: 'npm',
-  opts: ['run', 'dev:serve'],
+  opts: ['run', 'dev:server'],
   start: () => {
     server.process = spawn(server.command, server.opts)
     server.process.stdout.on('data', runner.serverLog)
