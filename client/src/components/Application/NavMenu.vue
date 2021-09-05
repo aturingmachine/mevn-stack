@@ -49,11 +49,6 @@ export default {
         route: '/users',
         icon: 'mdi-account-group',
       },
-      {
-        text: 'About',
-        route: '/about',
-        icon: 'mdi-information-variant',
-      },
     ],
   }),
 }
