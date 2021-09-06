@@ -1,5 +1,5 @@
-const { errorHandlers } = require('./error-handler')
+const { cors } = require('./cors')
 
 module.exports = {
-  errorHandlers
+  cors,
 }
