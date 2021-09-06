@@ -4,8 +4,10 @@ const express = require('express')
 const morgan = require('morgan')
 const { establishDbConnection } = require('./database/connection')
 const { cors } = require('./middleware/cors')
-const { log } = require('./utils/logger')
 const { apiRoutes } = require('./routes/index')
+const trunks = require('trunks-log')
+
+const log = new trunks('MAIN')
 
 const port = process.env.SERVER_PORT || 3000
 
