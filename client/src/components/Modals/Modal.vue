@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { ModalService } from '../../services/modal-service'
+import { ModalService } from '../../services/modal.service'
 import ConfirmModal from './ConfirmModal.vue'
 import GenericModal from './GenericModal.vue'
 

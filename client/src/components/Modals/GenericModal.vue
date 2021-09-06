@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { ModalService } from '../../services/modal-service'
+import { ModalService } from '../../services/modal.service'
 export default {
   name: 'GenericModal',
 

@@ -44,7 +44,7 @@
 
 <script>
 import { loadingStates } from '../../../mixins/loading-state'
-import { ModalService } from '../../../services/modal-service'
+import { ModalService } from '../../../services/modal.service'
 import EditUserForm from '../EditUserForm.vue'
 
 export default {

@@ -36,11 +36,7 @@ const runner = {
       .toString()
       .split('\n')
       .filter((d) => {
-        return (
-          d.toString().length &&
-          (!d.toString().includes('webpack.Progress') ||
-            ['25%', '50%', '75%'].some((v) => d.includes(v)))
-        )
+        return d.toString().length && !d.toString().includes('webpack.Progress')
       })
       .forEach((d) => process.stdout.write(`${tag} ${d}\n`))
   },

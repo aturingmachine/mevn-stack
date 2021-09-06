@@ -16,7 +16,7 @@
 import TheUsersList from '../components/Users/TheUsersList/TheUsersList.vue'
 import NewUserForm from '../components/Users/NewUserForm.vue'
 import { loadingStates } from '../mixins/loading-state'
-import { ModalService } from '../services/modal-service'
+import { ModalService } from '../services/modal.service'
 
 export default {
   name: 'UsersPage',

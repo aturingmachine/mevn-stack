@@ -23,9 +23,11 @@
   "devDependencies": {
     "boxen": "^5.0.1",
     "chalk": "^4.1.2",
+    "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "nodemon": "^2.0.12"
+    "nodemon": "^2.0.12",
+    "prettier": "^2.3.2"
   },
   "nodemonConfig": {
     "ignore": [
